@@ -6,10 +6,19 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:unit": "vitest run",
+    "test:unit:ui": "vitest --ui",
+    "test:integration": "playwright test",
+    "test:all": "npm run test:unit && npm run test:integration"
   },
   "dependencies": {
     "@astrojs/netlify": "^6.6.2",
     "astro": "^5.16.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@vitest/ui": "^4.0.13",
+    "vitest": "^4.0.13"
   }
 }
