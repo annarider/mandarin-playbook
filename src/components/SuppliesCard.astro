@@ -1,0 +1,63 @@
+---
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="supplies-card card">
+  <h2>Supplies Needed</h2>
+  <ul class="supplies-list">
+    {items.map((supply) => (
+      <li class="supply-item">{supply}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .card {
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #c41e3a;
+    border-bottom: 2px solid #c41e3a;
+    padding-bottom: 0.5rem;
+  }
+
+  .supplies-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0;
+  }
+
+  .supply-item {
+    padding: 0.5rem 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  @media (min-width: 768px) {
+    .card {
+      padding: 2rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    .supply-item {
+      font-size: 1.25rem;
+    }
+  }
+</style>
