@@ -1,5 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
 
+const activities = await getCollection('activities');
 ---
 
 <html lang="en">
@@ -8,9 +10,18 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Mandarin Homeschool Activities</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>Mandarin Homeschool Activities</h1>
+		<ul>
+			{activities.map((activity) => (
+				<li>
+					<a href={`/activities/${activity.slug}`}>
+						{activity.data.title}
+					</a>
+				</li>
+			))}
+		</ul>
 	</body>
 </html>
