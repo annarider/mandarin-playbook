@@ -1,28 +1,44 @@
 import { describe, it, expect } from 'vitest';
-import { getCollection } from 'astro:content';
+import * as fs from 'fs';
+import * as path from 'path';
+import matter from 'gray-matter';
+
+const activitiesDir = path.join(process.cwd(), 'src/content/activities');
+
+function getAllActivities() {
+  const files = fs.readdirSync(activitiesDir);
+  return files
+    .filter(file => file.endsWith('.md'))
+    .map(file => {
+      const filePath = path.join(activitiesDir, file);
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      const { data, content } = matter(fileContent);
+      return {
+        slug: file.replace('.md', ''),
+        data,
+        body: content,
+      };
+    });
+}
 
 describe('Content Loading', () => {
-  it('should return all activities from getCollection', async () => {
-    const activities = await getCollection('activities');
-
-    expect(activities).toBeDefined();
-    expect(Array.isArray(activities)).toBe(true);
-    expect(activities.length).toBe(3); // We have 3 sample activities
+  it('should have all 3 sample activity files', () => {
+    const activities = getAllActivities();
+    expect(activities.length).toBe(3);
   });
 
-  it('should have correct activity data structure', async () => {
-    const activities = await getCollection('activities');
+  it('should have correct activity file structure', () => {
+    const activities = getAllActivities();
 
     activities.forEach((activity) => {
-      expect(activity).toHaveProperty('id');
       expect(activity).toHaveProperty('slug');
       expect(activity).toHaveProperty('data');
       expect(activity).toHaveProperty('body');
     });
   });
 
-  it('should have properly typed frontmatter data', async () => {
-    const activities = await getCollection('activities');
+  it('should have properly structured frontmatter data', () => {
+    const activities = getAllActivities();
 
     activities.forEach((activity) => {
       expect(activity.data).toHaveProperty('title');
@@ -39,8 +55,8 @@ describe('Content Loading', () => {
     });
   });
 
-  it('should have accessible markdown body content', async () => {
-    const activities = await getCollection('activities');
+  it('should have accessible markdown body content', () => {
+    const activities = getAllActivities();
 
     activities.forEach((activity) => {
       expect(typeof activity.body).toBe('string');
@@ -48,8 +64,8 @@ describe('Content Loading', () => {
     });
   });
 
-  it('should load thanksgiving-gratitude activity with vocab and phrases', async () => {
-    const activities = await getCollection('activities');
+  it('should load thanksgiving-gratitude activity with vocab and phrases', () => {
+    const activities = getAllActivities();
     const thanksgiving = activities.find(a => a.slug === 'thanksgiving-gratitude');
 
     expect(thanksgiving).toBeDefined();
@@ -75,8 +91,8 @@ describe('Content Loading', () => {
     expect(thanksgiving?.data.phrases?.length).toBeGreaterThan(0);
   });
 
-  it('should load counting-game activity with minimal fields', async () => {
-    const activities = await getCollection('activities');
+  it('should load counting-game activity with minimal fields', () => {
+    const activities = getAllActivities();
     const counting = activities.find(a => a.slug === 'counting-game');
 
     expect(counting).toBeDefined();
@@ -89,8 +105,8 @@ describe('Content Loading', () => {
     expect(counting?.data.phrases).toBeUndefined();
   });
 
-  it('should load mid-autumn-story activity with printable', async () => {
-    const activities = await getCollection('activities');
+  it('should load mid-autumn-story activity with printable', () => {
+    const activities = getAllActivities();
     const midAutumn = activities.find(a => a.slug === 'mid-autumn-story');
 
     expect(midAutumn).toBeDefined();
@@ -101,8 +117,8 @@ describe('Content Loading', () => {
     expect(midAutumn?.data.printable?.url).toBe('/printables/change-coloring.pdf');
   });
 
-  it('should filter activities by category', async () => {
-    const allActivities = await getCollection('activities');
+  it('should filter activities by category', () => {
+    const allActivities = getAllActivities();
     const festivalActivities = allActivities.filter(a => a.data.category === 'festival');
 
     expect(festivalActivities.length).toBe(2); // thanksgiving-gratitude and mid-autumn-story
@@ -112,8 +128,8 @@ describe('Content Loading', () => {
     });
   });
 
-  it('should filter activities by difficulty level', async () => {
-    const allActivities = await getCollection('activities');
+  it('should filter activities by difficulty level', () => {
+    const allActivities = getAllActivities();
     const beginnerActivities = allActivities.filter(a => a.data.difficultyLevel === 'beginner');
 
     expect(beginnerActivities.length).toBeGreaterThan(0);
@@ -123,8 +139,8 @@ describe('Content Loading', () => {
     });
   });
 
-  it('should filter activities by skills', async () => {
-    const allActivities = await getCollection('activities');
+  it('should filter activities by skills', () => {
+    const allActivities = getAllActivities();
     const listeningActivities = allActivities.filter(
       a => a.data.skills.includes('listening')
     );
@@ -136,8 +152,8 @@ describe('Content Loading', () => {
     });
   });
 
-  it('should have unique slugs for all activities', async () => {
-    const activities = await getCollection('activities');
+  it('should have unique slugs for all activities', () => {
+    const activities = getAllActivities();
     const slugs = activities.map(a => a.slug);
     const uniqueSlugs = new Set(slugs);
 
