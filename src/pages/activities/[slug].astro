@@ -1,5 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
+import VocabCard from '../../components/VocabCard.astro';
+import PhrasesCard from '../../components/PhrasesCard.astro';
+import SuppliesCard from '../../components/SuppliesCard.astro';
+import InstructionsCard from '../../components/InstructionsCard.astro';
 
 export async function getStaticPaths() {
   const activities = await getCollection('activities');
@@ -20,90 +24,150 @@ const { Content } = await activity.render();
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{activity.data.title} - Mandarin Homeschool Activities</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+				line-height: 1.6;
+				color: #333;
+				background: #f9fafb;
+				padding: 1rem;
+			}
+
+			.back-nav {
+				margin-bottom: 1.5rem;
+			}
+
+			.back-nav a {
+				color: #c41e3a;
+				text-decoration: none;
+				font-size: 1rem;
+				font-weight: 500;
+			}
+
+			.back-nav a:hover {
+				text-decoration: underline;
+			}
+
+			.activity-header {
+				margin-bottom: 2rem;
+			}
+
+			h1 {
+				font-size: 2rem;
+				color: #c41e3a;
+				margin-bottom: 0.75rem;
+			}
+
+			.description {
+				font-size: 1.25rem;
+				color: #555;
+				margin-bottom: 1rem;
+			}
+
+			.metadata {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1rem;
+				font-size: 0.95rem;
+			}
+
+			.meta-item {
+				background: #fff;
+				padding: 0.5rem 1rem;
+				border-radius: 8px;
+				border: 1px solid #e5e7eb;
+			}
+
+			.meta-item strong {
+				color: #c41e3a;
+				margin-right: 0.25rem;
+			}
+
+			.activity-content {
+				max-width: 100%;
+			}
+
+			.tags-section {
+				background: #f3f4f6;
+				padding: 1rem;
+				border-radius: 8px;
+				margin-top: 1.5rem;
+				font-size: 0.95rem;
+			}
+
+			.tags-section strong {
+				color: #c41e3a;
+				margin-right: 0.5rem;
+			}
+
+			@media (min-width: 768px) {
+				body {
+					padding: 2rem;
+					max-width: 900px;
+					margin: 0 auto;
+				}
+
+				h1 {
+					font-size: 2.5rem;
+				}
+
+				.description {
+					font-size: 1.375rem;
+				}
+
+				.metadata {
+					font-size: 1rem;
+				}
+
+				.back-nav a {
+					font-size: 1.125rem;
+				}
+
+				.tags-section {
+					font-size: 1rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<a href="/">← Back to all activities</a>
+		<nav class="back-nav">
+			<a href="/">← Back to all activities</a>
+		</nav>
 
-		<h1>{activity.data.title}</h1>
-
-		<div class="metadata">
-			<p><strong>Description:</strong> {activity.data.description}</p>
-			<p><strong>Age Range:</strong> {activity.data.ageRange}</p>
-			<p><strong>Duration:</strong> {activity.data.duration}</p>
-			<p><strong>Category:</strong> {activity.data.category}</p>
-			<p><strong>Difficulty:</strong> {activity.data.difficultyLevel}</p>
-			<p><strong>Skills:</strong> {activity.data.skills.join(', ')}</p>
-		</div>
-
-		{activity.data.vocabulary && (
-			<div class="vocabulary">
-				<h2>Vocabulary</h2>
-				<ul>
-					{activity.data.vocabulary.map((word) => (
-						<li>
-							<strong>{word.simplified}</strong>
-							{word.traditional && ` (${word.traditional})`}
-							{' - '}
-							<em>{word.pinyin}</em>
-							{' - '}
-							{word.english}
-						</li>
-					))}
-				</ul>
+		<header class="activity-header">
+			<h1>{activity.data.title}</h1>
+			<p class="description">{activity.data.description}</p>
+			<div class="metadata">
+				<span class="meta-item"><strong>Age:</strong> {activity.data.ageRange}</span>
+				<span class="meta-item"><strong>Duration:</strong> {activity.data.duration}</span>
+				<span class="meta-item"><strong>Level:</strong> {activity.data.difficultyLevel}</span>
 			</div>
-		)}
+		</header>
 
-		{activity.data.phrases && (
-			<div class="phrases">
-				<h2>Phrases</h2>
-				<ul>
-					{activity.data.phrases.map((phrase) => (
-						<li>
-							<strong>{phrase.simplified}</strong>
-							{phrase.traditional && ` (${phrase.traditional})`}
-							{' - '}
-							<em>{phrase.pinyin}</em>
-							{' - '}
-							{phrase.english}
-						</li>
-					))}
-				</ul>
-			</div>
-		)}
+		<main class="activity-content">
+			{activity.data.vocabulary && <VocabCard items={activity.data.vocabulary} />}
 
-		{activity.data.supplies && (
-			<div class="supplies">
-				<h2>Supplies Needed</h2>
-				<ul>
-					{activity.data.supplies.map((supply) => (
-						<li>{supply}</li>
-					))}
-				</ul>
-			</div>
-		)}
+			{activity.data.phrases && <PhrasesCard items={activity.data.phrases} />}
 
-		{activity.data.printable && (
-			<div class="printable">
-				<h2>Printable</h2>
-				<p>
-					<a href={activity.data.printable.url} target="_blank">
-						Download: {activity.data.printable.title}
-					</a>
-				</p>
-			</div>
-		)}
+			{activity.data.supplies && <SuppliesCard items={activity.data.supplies} />}
 
-		<div class="content">
-			<Content />
-		</div>
+			<InstructionsCard Content={Content} />
 
-		{activity.data.tags && (
-			<div class="tags">
-				<strong>Tags:</strong> {activity.data.tags.join(', ')}
-			</div>
-		)}
+			{activity.data.tags && (
+				<div class="tags-section">
+					<strong>Tags:</strong> {activity.data.tags.join(', ')}
+				</div>
+			)}
+		</main>
 
-		<hr />
-		<a href="/">← Back to all activities</a>
+		<nav class="back-nav">
+			<a href="/">← Back to all activities</a>
+		</nav>
 	</body>
 </html>
