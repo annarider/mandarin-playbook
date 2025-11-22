@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const activities = await getCollection('activities');
+  return activities.map((activity) => ({
+    params: { slug: activity.slug },
+    props: { activity },
+  }));
+}
+
+const { activity } = Astro.props;
+const { Content } = await activity.render();
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{activity.data.title} - Mandarin Homeschool Activities</title>
+	</head>
+	<body>
+		<a href="/">← Back to all activities</a>
+
+		<h1>{activity.data.title}</h1>
+
+		<div class="metadata">
+			<p><strong>Description:</strong> {activity.data.description}</p>
+			<p><strong>Age Range:</strong> {activity.data.ageRange}</p>
+			<p><strong>Duration:</strong> {activity.data.duration}</p>
+			<p><strong>Category:</strong> {activity.data.category}</p>
+			<p><strong>Difficulty:</strong> {activity.data.difficultyLevel}</p>
+			<p><strong>Skills:</strong> {activity.data.skills.join(', ')}</p>
+		</div>
+
+		{activity.data.vocabulary && (
+			<div class="vocabulary">
+				<h2>Vocabulary</h2>
+				<ul>
+					{activity.data.vocabulary.map((word) => (
+						<li>
+							<strong>{word.simplified}</strong>
+							{word.traditional && ` (${word.traditional})`}
+							{' - '}
+							<em>{word.pinyin}</em>
+							{' - '}
+							{word.english}
+						</li>
+					))}
+				</ul>
+			</div>
+		)}
+
+		{activity.data.phrases && (
+			<div class="phrases">
+				<h2>Phrases</h2>
+				<ul>
+					{activity.data.phrases.map((phrase) => (
+						<li>
+							<strong>{phrase.simplified}</strong>
+							{phrase.traditional && ` (${phrase.traditional})`}
+							{' - '}
+							<em>{phrase.pinyin}</em>
+							{' - '}
+							{phrase.english}
+						</li>
+					))}
+				</ul>
+			</div>
+		)}
+
+		{activity.data.supplies && (
+			<div class="supplies">
+				<h2>Supplies Needed</h2>
+				<ul>
+					{activity.data.supplies.map((supply) => (
+						<li>{supply}</li>
+					))}
+				</ul>
+			</div>
+		)}
+
+		{activity.data.printable && (
+			<div class="printable">
+				<h2>Printable</h2>
+				<p>
+					<a href={activity.data.printable.url} target="_blank">
+						Download: {activity.data.printable.title}
+					</a>
+				</p>
+			</div>
+		)}
+
+		<div class="content">
+			<Content />
+		</div>
+
+		{activity.data.tags && (
+			<div class="tags">
+				<strong>Tags:</strong> {activity.data.tags.join(', ')}
+			</div>
+		)}
+
+		<hr />
+		<a href="/">← Back to all activities</a>
+	</body>
+</html>
