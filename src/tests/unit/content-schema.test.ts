@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { z } from 'astro:content';
+import { z } from 'zod';
 
 // Import the schema from config
 const activitySchema = z.object({
