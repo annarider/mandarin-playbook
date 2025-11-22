@@ -1,0 +1,121 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "← Back to all activities" [ref=e3] [cursor=pointer]:
+      - /url: /
+  - banner [ref=e4]:
+    - heading "Mid-Autumn Festival Story Time" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Learn about Chang'e and the Moon Festival through storytelling and crafts
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - strong [ref=e9]: "Age:"
+        - text: 5-12 years
+      - generic [ref=e10]:
+        - strong [ref=e11]: "Duration:"
+        - text: 45-60 minutes
+      - generic [ref=e12]:
+        - strong [ref=e13]: "Level:"
+        - text: intermediate
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - heading "Vocabulary" [level=2] [ref=e16]
+      - list [ref=e17]:
+        - listitem [ref=e18]:
+          - generic [ref=e19]: 中秋节
+          - generic [ref=e20]: zhōngqiū jié
+          - generic [ref=e21]: Mid-Autumn Festival
+        - listitem [ref=e22]:
+          - generic [ref=e23]: 月亮
+          - generic [ref=e24]: yuèliàng
+          - generic [ref=e25]: moon
+        - listitem [ref=e26]:
+          - generic [ref=e27]: 月饼
+          - generic [ref=e28]: yuèbǐng
+          - generic [ref=e29]: mooncake
+        - listitem [ref=e30]:
+          - generic [ref=e31]: 嫦娥
+          - generic [ref=e32]: Cháng'é
+          - generic [ref=e33]: Chang'e (moon goddess)
+        - listitem [ref=e34]:
+          - generic [ref=e35]: 兔子
+          - generic [ref=e36]: tùzi
+          - generic [ref=e37]: rabbit
+    - generic [ref=e38]:
+      - heading "Phrases" [level=2] [ref=e39]
+      - list [ref=e40]:
+        - listitem [ref=e41]:
+          - generic [ref=e42]: 中秋节快乐
+          - generic [ref=e43]: zhōngqiū jié kuàilè
+          - generic [ref=e44]: Happy Mid-Autumn Festival
+        - listitem [ref=e45]:
+          - generic [ref=e46]: 月亮真圆
+          - generic [ref=e47]: yuèliàng zhēn yuán
+          - generic [ref=e48]: The moon is so round
+    - generic [ref=e49]:
+      - heading "Supplies Needed" [level=2] [ref=e50]
+      - list [ref=e51]:
+        - listitem [ref=e52]: Paper plates
+        - listitem [ref=e53]: Yellow and white paint or crayons
+        - listitem [ref=e54]: Cotton balls (for clouds)
+        - listitem [ref=e55]: Glue
+        - listitem [ref=e56]: "Optional: mooncakes for tasting"
+    - generic [ref=e57]:
+      - heading "Activity Instructions" [level=2] [ref=e58]
+      - generic [ref=e59]:
+        - heading "Activity Instructions" [level=2] [ref=e60]
+        - 'heading "Part 1: Story Time (20 minutes)" [level=3] [ref=e61]'
+        - paragraph [ref=e62]: "Tell the story of Chang’e (嫦娥), the moon goddess:"
+        - paragraph [ref=e63]:
+          - strong [ref=e64]: The Legend of Chang’e
+        - paragraph [ref=e65]: Long ago in China, there were ten suns in the sky. The great archer Houyi (后羿) shot down nine suns, saving the Earth. As a reward, he received a magic potion that would make him live forever.
+        - paragraph [ref=e66]: Houyi didn’t want to live forever without his wife Chang’e, so he gave her the potion to keep safe. But one day, a bad man tried to steal it! To protect it, Chang’e drank the potion herself.
+        - paragraph [ref=e67]: She became so light that she floated up to the moon. Houyi missed her very much. Every year during the autumn full moon, he would set out her favorite foods, hoping she could see his love from the moon.
+        - paragraph [ref=e68]: This is why Chinese families gather during the Mid-Autumn Festival to look at the moon and eat mooncakes together.
+        - 'heading "Part 2: Vocabulary Practice (10 minutes)" [level=3] [ref=e69]'
+        - list [ref=e70]:
+          - listitem [ref=e71]: Practice saying each vocabulary word
+          - listitem [ref=e72]: Point to the moon in pictures or outside
+          - listitem [ref=e73]: Taste mooncake if available and say “月饼” (yuèbǐng)
+        - 'heading "Part 3: Moon Craft (20 minutes)" [level=3] [ref=e74]'
+        - paragraph [ref=e75]: "Create a paper plate moon:"
+        - list [ref=e76]:
+          - listitem [ref=e77]: Paint the paper plate yellow/white
+          - listitem [ref=e78]: Add craters with darker paint or crayon
+          - listitem [ref=e79]: Glue cotton balls around it for clouds
+          - listitem [ref=e80]: "Optional: Draw Chang’e and the rabbit on the moon"
+        - 'heading "Part 4: Moon Viewing (Optional)" [level=3] [ref=e81]'
+        - paragraph [ref=e82]: "If there’s a full moon visible, go outside and:"
+        - list [ref=e83]:
+          - listitem [ref=e84]: Look at the moon together
+          - listitem [ref=e85]: Say “月亮真圆” (yuèliàng zhēn yuán - the moon is so round)
+          - listitem [ref=e86]: Talk about what you learned
+        - heading "Cultural Connection" [level=2] [ref=e87]
+        - paragraph [ref=e88]: The Mid-Autumn Festival (中秋节) is the second most important traditional Chinese festival, celebrated on the 15th day of the 8th lunar month (usually September or October). It’s a time for family reunions, moon watching, and eating mooncakes.
+        - heading "Tips for Parents" [level=2] [ref=e89]
+        - list [ref=e90]:
+          - listitem [ref=e91]: Use lots of gestures when telling the story
+          - listitem [ref=e92]: Show pictures of the moon festival
+          - listitem [ref=e93]: If possible, buy mooncakes from an Asian market to make it authentic
+          - listitem [ref=e94]: Younger children can enjoy a simpler version of the story
+    - generic [ref=e95]:
+      - strong [ref=e96]: "Tags:"
+      - text: mid-autumn, festival, story, craft, moon
+  - navigation [ref=e97]:
+    - link "← Back to all activities" [ref=e98] [cursor=pointer]:
+      - /url: /
+  - generic [ref=e101]:
+    - button "Menu" [ref=e102]:
+      - img [ref=e104]
+      - generic: Menu
+    - button "Inspect" [ref=e108]:
+      - img [ref=e110]
+      - generic: Inspect
+    - button "Audit" [ref=e112]:
+      - img [ref=e114]
+      - generic: Audit
+    - button "Settings" [ref=e117]:
+      - img [ref=e119]
+      - generic: Settings
+```
