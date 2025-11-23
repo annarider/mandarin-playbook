@@ -29,26 +29,24 @@ test.describe('Activity Detail Pages', () => {
     const metadata = await page.locator('.metadata');
     await expect(metadata).toBeVisible();
 
-    // Check specific metadata fields
-    await expect(page.locator('text=Age Range:')).toBeVisible();
+    // Check specific metadata fields (new labels)
+    await expect(page.locator('text=Age:')).toBeVisible();
     await expect(page.locator('text=Duration:')).toBeVisible();
-    await expect(page.locator('text=Category:')).toBeVisible();
-    await expect(page.locator('text=Difficulty:')).toBeVisible();
-    await expect(page.locator('text=Skills:')).toBeVisible();
+    await expect(page.locator('text=Level:')).toBeVisible();
   });
 
   test('should display vocabulary items with Chinese, pinyin, and English', async ({ page }) => {
     await page.goto('/activities/thanksgiving-gratitude');
 
-    // Check for vocabulary section
-    const vocabSection = await page.locator('.vocabulary');
+    // Check for vocabulary section (updated to use vocab-card class)
+    const vocabSection = page.locator('.vocab-card');
     await expect(vocabSection).toBeVisible();
 
     // Check for vocabulary heading
-    await expect(page.locator('.vocabulary h2')).toHaveText('Vocabulary');
+    await expect(page.locator('.vocab-card h2')).toHaveText('Vocabulary');
 
     // Check that vocabulary items are displayed
-    const vocabList = await page.locator('.vocabulary ul li');
+    const vocabList = page.locator('.vocab-card ul li');
     const count = await vocabList.count();
     expect(count).toBeGreaterThan(0);
 
@@ -63,15 +61,15 @@ test.describe('Activity Detail Pages', () => {
   test('should display phrases with Chinese, pinyin, and English', async ({ page }) => {
     await page.goto('/activities/thanksgiving-gratitude');
 
-    // Check for phrases section
-    const phrasesSection = await page.locator('.phrases');
+    // Check for phrases section (updated to use phrases-card class)
+    const phrasesSection = page.locator('.phrases-card');
     await expect(phrasesSection).toBeVisible();
 
     // Check for phrases heading
-    await expect(page.locator('.phrases h2')).toHaveText('Phrases');
+    await expect(page.locator('.phrases-card h2')).toHaveText('Phrases');
 
     // Check that phrase items are displayed
-    const phrasesList = await page.locator('.phrases ul li');
+    const phrasesList = page.locator('.phrases-card ul li');
     const count = await phrasesList.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -79,15 +77,15 @@ test.describe('Activity Detail Pages', () => {
   test('should display supplies list when present', async ({ page }) => {
     await page.goto('/activities/thanksgiving-gratitude');
 
-    // Check for supplies section
-    const suppliesSection = await page.locator('.supplies');
+    // Check for supplies section (updated to use supplies-card class)
+    const suppliesSection = page.locator('.supplies-card');
     await expect(suppliesSection).toBeVisible();
 
     // Check for supplies heading
-    await expect(page.locator('.supplies h2')).toHaveText('Supplies Needed');
+    await expect(page.locator('.supplies-card h2')).toHaveText('Supplies Needed');
 
     // Check that supplies are listed
-    const suppliesList = await page.locator('.supplies ul li');
+    const suppliesList = page.locator('.supplies-card ul li');
     const count = await suppliesList.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -95,8 +93,8 @@ test.describe('Activity Detail Pages', () => {
   test('should not display vocabulary section for activities without vocab', async ({ page }) => {
     await page.goto('/activities/counting-game');
 
-    // Counting game doesn't have vocabulary field
-    const vocabSection = await page.locator('.vocabulary');
+    // Counting game doesn't have vocabulary field (updated to use vocab-card class)
+    const vocabSection = page.locator('.vocab-card');
     await expect(vocabSection).not.toBeVisible();
   });
 
@@ -120,12 +118,12 @@ test.describe('Activity Detail Pages', () => {
   test('should render markdown content in the content section', async ({ page }) => {
     await page.goto('/activities/thanksgiving-gratitude');
 
-    // Check for content section
-    const contentSection = await page.locator('.content');
+    // Check for content section (updated to use instructions-card class)
+    const contentSection = page.locator('.instructions-card');
     await expect(contentSection).toBeVisible();
 
     // Check that content has been rendered (should have headings, paragraphs, etc.)
-    const headings = await contentSection.locator('h2');
+    const headings = contentSection.locator('h2');
     const count = await headings.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -133,8 +131,8 @@ test.describe('Activity Detail Pages', () => {
   test('should display tags when present', async ({ page }) => {
     await page.goto('/activities/thanksgiving-gratitude');
 
-    // Check for tags section
-    const tagsSection = await page.locator('.tags');
+    // Check for tags section (updated to use tags-section class)
+    const tagsSection = page.locator('.tags-section');
     await expect(tagsSection).toBeVisible();
 
     const tagsText = await tagsSection.textContent();
@@ -163,8 +161,8 @@ test.describe('Activity Detail Pages', () => {
     // Wait for navigation
     await page.waitForURL('/');
 
-    // Verify we're on the homepage
-    const heading = await page.locator('h1');
+    // Verify we're on the homepage (use first h1 to avoid strict mode violation)
+    const heading = page.locator('h1').first();
     await expect(heading).toHaveText('Mandarin Homeschool Activities');
   });
 
@@ -198,13 +196,11 @@ test.describe('Activity Detail Pages', () => {
     for (const activity of activities) {
       await page.goto(`/activities/${activity}`);
 
-      // Verify all required metadata is present
-      await expect(page.locator('text=Description:')).toBeVisible();
-      await expect(page.locator('text=Age Range:')).toBeVisible();
+      // Verify all required metadata is present (updated labels)
+      await expect(page.locator('.description')).toBeVisible(); // Description is now a separate paragraph
+      await expect(page.locator('text=Age:')).toBeVisible();
       await expect(page.locator('text=Duration:')).toBeVisible();
-      await expect(page.locator('text=Category:')).toBeVisible();
-      await expect(page.locator('text=Difficulty:')).toBeVisible();
-      await expect(page.locator('text=Skills:')).toBeVisible();
+      await expect(page.locator('text=Level:')).toBeVisible();
     }
   });
 });

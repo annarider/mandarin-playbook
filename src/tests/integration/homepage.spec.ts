@@ -47,8 +47,8 @@ test.describe('Homepage', () => {
     // Wait for navigation
     await page.waitForURL('/activities/thanksgiving-gratitude');
 
-    // Verify we're on the detail page
-    const heading = await page.locator('h1');
+    // Verify we're on the detail page (use more specific selector)
+    const heading = page.locator('.activity-header h1').first();
     await expect(heading).toHaveText('Thanksgiving Gratitude Circle');
   });
 
