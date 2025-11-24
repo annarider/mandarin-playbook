@@ -17,7 +17,7 @@ test.describe('Card Content Display', () => {
     await expect(page.getByRole('heading', { name: 'Vocabulary' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Phrases' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Supplies Needed' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Activity Instructions' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Activity Instructions' }).first()).toBeVisible();
   });
 
   test('vocabulary displays Chinese characters, pinyin, and English translation', async ({ page }) => {
