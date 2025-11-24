@@ -9,3 +9,7 @@
 4. **Expansion paths** — What would it take to add Cantonese? Progress tracking? Audio pronunciation guides?
 
 5. **Maintainability** — Since parent has limited time, how complex is it to update or fix issues?
+
+## Development Principles
+
+**Testing approach:** Focus on testing behavior and public interfaces, not implementation details. Tests should verify what the code does, not how it does it. Follow Sandi Metz's testing principles and best practices.
