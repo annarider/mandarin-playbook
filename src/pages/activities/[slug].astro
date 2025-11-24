@@ -216,6 +216,8 @@ const { Content } = await activity.render();
 
 			<InstructionsCard Content={Content} />
 
+			<TipsCard tips={activity.data.tips} />
+
 			{activity.data.tags && (
 				<div class="tags-section">
 					<strong>Tags:</strong> {activity.data.tags.join(', ')}
