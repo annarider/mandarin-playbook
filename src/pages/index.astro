@@ -10,18 +10,607 @@ const activities = await getCollection('activities');
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Mandarin Homeschool Activities</title>
+		<title>Mandarin Playbook - Play-Based Learning Activities</title>
+		<meta name="description" content="Fun Mandarin learning activities for families through play, games, crafts, and cultural exploration">
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+				line-height: 1.6;
+				color: #333;
+				background: #f9fafb;
+			}
+
+			.page-container {
+				max-width: 1400px;
+				margin: 0 auto;
+				padding: 1rem;
+			}
+
+			.page-header {
+				text-align: center;
+				margin-bottom: 2rem;
+				padding: 2rem 1rem;
+			}
+
+			.page-header h1 {
+				font-size: 2rem;
+				color: #c41e3a;
+				margin-bottom: 0.5rem;
+			}
+
+			.page-header p {
+				font-size: 1.125rem;
+				color: #555;
+			}
+
+			.search-bar {
+				margin-bottom: 2rem;
+			}
+
+			#search-input {
+				width: 100%;
+				padding: 0.75rem 1rem;
+				border: 2px solid #e5e7eb;
+				border-radius: 12px;
+				font-size: 1rem;
+				transition: border-color 0.2s;
+			}
+
+			#search-input:focus {
+				outline: none;
+				border-color: #c41e3a;
+			}
+
+			.page-layout {
+				display: flex;
+				flex-direction: column;
+				gap: 2rem;
+			}
+
+			.filter-panel {
+				background: white;
+				border: 2px solid #e5e7eb;
+				border-radius: 12px;
+				padding: 1.5rem;
+			}
+
+			.filter-panel h2 {
+				font-size: 1.25rem;
+				color: #c41e3a;
+				margin-bottom: 1rem;
+				border-bottom: 2px solid #c41e3a;
+				padding-bottom: 0.5rem;
+			}
+
+			.filter-group {
+				margin-bottom: 1.5rem;
+			}
+
+			.filter-group label {
+				display: block;
+				font-weight: 500;
+				margin-bottom: 0.5rem;
+				color: #333;
+			}
+
+			.filter-group select {
+				width: 100%;
+				padding: 0.5rem;
+				border: 1px solid #d1d5db;
+				border-radius: 6px;
+				font-size: 1rem;
+				background: white;
+				cursor: pointer;
+			}
+
+			.filter-group select:focus {
+				outline: none;
+				border-color: #c41e3a;
+			}
+
+			.checkbox-label {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				margin-bottom: 0.5rem;
+				font-weight: normal;
+				cursor: pointer;
+			}
+
+			.checkbox-label input[type="checkbox"] {
+				width: 18px;
+				height: 18px;
+				cursor: pointer;
+			}
+
+			.btn-secondary {
+				width: 100%;
+				padding: 0.75rem;
+				background: #f3f4f6;
+				border: 1px solid #d1d5db;
+				border-radius: 6px;
+				font-size: 1rem;
+				font-weight: 500;
+				cursor: pointer;
+				transition: all 0.2s;
+			}
+
+			.btn-secondary:hover {
+				background: #e5e7eb;
+			}
+
+			.results-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 1.5rem;
+			}
+
+			.results-header h2 {
+				font-size: 1.5rem;
+				color: #333;
+			}
+
+			#results-count {
+				font-size: 0.875rem;
+				color: #6b7280;
+				font-weight: 500;
+			}
+
+			.activity-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+
+			.activity-card {
+				background: white;
+				border: 2px solid #e5e7eb;
+				border-radius: 12px;
+				padding: 1.5rem;
+				text-decoration: none;
+				color: inherit;
+				transition: all 0.2s;
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+			}
+
+			.activity-card:hover {
+				border-color: #c41e3a;
+				box-shadow: 0 4px 12px rgba(196, 30, 58, 0.15);
+				transform: translateY(-2px);
+			}
+
+			.activity-card h3 {
+				font-size: 1.25rem;
+				color: #c41e3a;
+				margin: 0;
+			}
+
+			.activity-card .description {
+				color: #555;
+				font-size: 0.95rem;
+				margin: 0;
+			}
+
+			.metadata {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+
+			.badge {
+				display: inline-block;
+				padding: 0.25rem 0.75rem;
+				border-radius: 6px;
+				font-size: 0.875rem;
+				font-weight: 500;
+			}
+
+			.badge.category {
+				background: #fef3c7;
+				color: #92400e;
+			}
+
+			.badge.level-beginner {
+				background: #dcfce7;
+				color: #166534;
+			}
+
+			.badge.level-intermediate {
+				background: #dbeafe;
+				color: #1e40af;
+			}
+
+			.badge.level-advanced {
+				background: #fce7f3;
+				color: #9f1239;
+			}
+
+			.meta-info {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1rem;
+				font-size: 0.875rem;
+				color: #666;
+			}
+
+			.printable-badge {
+				display: inline-block;
+				padding: 0.25rem 0.75rem;
+				background: #f0fdf4;
+				border: 1px solid #86efac;
+				border-radius: 6px;
+				font-size: 0.875rem;
+				color: #166534;
+				font-weight: 500;
+			}
+
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+
+			.tag {
+				display: inline-block;
+				padding: 0.25rem 0.5rem;
+				background: #f3f4f6;
+				border-radius: 4px;
+				font-size: 0.75rem;
+				color: #666;
+			}
+
+			.no-results {
+				grid-column: 1 / -1;
+				text-align: center;
+				padding: 3rem 1rem;
+				background: white;
+				border: 2px dashed #e5e7eb;
+				border-radius: 12px;
+			}
+
+			.no-results h3 {
+				font-size: 1.5rem;
+				color: #333;
+				margin-bottom: 0.5rem;
+			}
+
+			.no-results p {
+				color: #6b7280;
+				margin-bottom: 1rem;
+			}
+
+			@media (min-width: 640px) {
+				.activity-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (min-width: 768px) {
+				.page-container {
+					padding: 2rem;
+				}
+
+				.page-header {
+					padding: 3rem 1rem;
+				}
+
+				.page-header h1 {
+					font-size: 2.5rem;
+				}
+
+				.page-layout {
+					flex-direction: row;
+				}
+
+				.filter-panel {
+					width: 280px;
+					position: sticky;
+					top: 1rem;
+					height: fit-content;
+				}
+
+				.activity-grid {
+					flex: 1;
+				}
+			}
+
+			@media (min-width: 1024px) {
+				.activity-grid {
+					grid-template-columns: repeat(3, 1fr);
+				}
+
+				.page-header h1 {
+					font-size: 3rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Mandarin Homeschool Activities</h1>
-o		<ul>
-			{activities.map((activity) => (
-				<li>
-					<a href={`/activities/${activity.slug}`}>
-						{activity.data.title}
+		<div class="page-container">
+			<header class="page-header">
+				<h1>Mandarin Playbook</h1>
+				<p>Play-based Mandarin learning activities for families</p>
+			</header>
+
+			<div class="search-bar">
+				<input
+					type="search"
+					id="search-input"
+					placeholder="Search activities by title or description..."
+					aria-label="Search activities"
+				/>
+			</div>
+
+			<div class="page-layout">
+				<aside class="filter-panel">
+					<h2>Filter Activities</h2>
+
+					<div class="filter-group">
+						<label for="category-filter">Subject</label>
+						<select id="category-filter">
+							<option value="">All subjects</option>
+							<option value="game">Games</option>
+							<option value="craft">Crafts</option>
+							<option value="story">Stories</option>
+							<option value="song">Songs</option>
+							<option value="festival">Festivals</option>
+							<option value="food">Food</option>
+							<option value="other">Other</option>
+						</select>
+					</div>
+
+					<div class="filter-group">
+						<label for="level-filter">Difficulty Level</label>
+						<select id="level-filter">
+							<option value="">All levels</option>
+							<option value="beginner">Beginner</option>
+							<option value="intermediate">Intermediate</option>
+							<option value="advanced">Advanced</option>
+						</select>
+					</div>
+
+					<div class="filter-group">
+						<label>Festivals</label>
+						<label class="checkbox-label">
+							<input type="checkbox" value="thanksgiving" data-filter="festival" />
+							Thanksgiving
+						</label>
+						<label class="checkbox-label">
+							<input type="checkbox" value="mid-autumn" data-filter="festival" />
+							Mid-Autumn
+						</label>
+						<label class="checkbox-label">
+							<input type="checkbox" value="lunar-new-year" data-filter="festival" />
+							Lunar New Year
+						</label>
+					</div>
+
+					<div class="filter-group">
+						<label class="checkbox-label">
+							<input type="checkbox" id="printable-filter" />
+							Has printable resources
+						</label>
+					</div>
+
+					<button id="clear-filters" class="btn-secondary">Clear all filters</button>
+				</aside>
+
+				<main>
+					<div class="results-header">
+						<h2>Activities</h2>
+						<span id="results-count">{activities.length} {activities.length === 1 ? 'activity' : 'activities'}</span>
+					</div>
+
+					<div class="activity-grid" id="activity-grid">
+						{activities.map((activity) => (
+							<a href={`/activities/${activity.slug}`} class="activity-card" data-slug={activity.slug}>
+								<h3>{activity.data.title}</h3>
+								<p class="description">{activity.data.description}</p>
+								<div class="metadata">
+									<span class="badge category">{activity.data.category}</span>
+									<span class={`badge level-${activity.data.difficultyLevel}`}>
+										{activity.data.difficultyLevel}
+									</span>
+								</div>
+								<div class="meta-info">
+									<span>👥 {activity.data.ageRange}</span>
+									<span>⏱️ {activity.data.duration}</span>
+								</div>
+								{activity.data.printable && (
+									<span class="printable-badge">📄 Printable</span>
+								)}
+								{activity.data.tags && activity.data.tags.length > 0 && (
+									<div class="tags">
+										{activity.data.tags.slice(0, 3).map((tag) => (
+											<span class="tag">{tag}</span>
+										))}
+									</div>
+								)}
+							</a>
+						))}
+					</div>
+				</main>
+			</div>
+		</div>
+
+		<script define:vars={{ activities }}>
+			// Serialize activities data for filtering
+			const activitiesData = activities.map(activity => ({
+				slug: activity.slug,
+				title: activity.data.title,
+				description: activity.data.description,
+				category: activity.data.category,
+				difficultyLevel: activity.data.difficultyLevel,
+				ageRange: activity.data.ageRange,
+				duration: activity.data.duration,
+				tags: activity.data.tags || [],
+				hasPrintable: !!activity.data.printable,
+			}));
+
+			// Filter state
+			let filters = {
+				category: '',
+				level: '',
+				festivals: [],
+				printable: false,
+				search: '',
+			};
+
+			// Filter function
+			function applyFilters() {
+				let filtered = activitiesData;
+
+				// Category filter
+				if (filters.category) {
+					filtered = filtered.filter(a => a.category === filters.category);
+				}
+
+				// Level filter
+				if (filters.level) {
+					filtered = filtered.filter(a => a.difficultyLevel === filters.level);
+				}
+
+				// Festival filters (any match)
+				if (filters.festivals.length > 0) {
+					filtered = filtered.filter(a =>
+						filters.festivals.some(festival => a.tags.includes(festival))
+					);
+				}
+
+				// Printable filter
+				if (filters.printable) {
+					filtered = filtered.filter(a => a.hasPrintable);
+				}
+
+				// Search filter
+				if (filters.search) {
+					const query = filters.search.toLowerCase();
+					filtered = filtered.filter(a =>
+						a.title.toLowerCase().includes(query) ||
+						a.description.toLowerCase().includes(query)
+					);
+				}
+
+				renderActivities(filtered);
+				updateResultsCount(filtered.length);
+			}
+
+			// Render activities to DOM
+			function renderActivities(activities) {
+				const grid = document.getElementById('activity-grid');
+
+				if (activities.length === 0) {
+					grid.innerHTML = `
+						<div class="no-results">
+							<h3>No activities found</h3>
+							<p>Try adjusting your filters or search terms.</p>
+							<button onclick="document.getElementById('clear-filters').click()" style="padding: 0.5rem 1rem; background: #c41e3a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">Clear all filters</button>
+						</div>
+					`;
+					return;
+				}
+
+				grid.innerHTML = activities.map(activity => `
+					<a href="/activities/${activity.slug}" class="activity-card">
+						<h3>${activity.title}</h3>
+						<p class="description">${activity.description}</p>
+						<div class="metadata">
+							<span class="badge category">${activity.category}</span>
+							<span class="badge level-${activity.difficultyLevel}">
+								${activity.difficultyLevel}
+							</span>
+						</div>
+						<div class="meta-info">
+							<span>👥 ${activity.ageRange}</span>
+							<span>⏱️ ${activity.duration}</span>
+						</div>
+						${activity.hasPrintable ? '<span class="printable-badge">📄 Printable</span>' : ''}
+						${activity.tags.length > 0 ? `
+							<div class="tags">
+								${activity.tags.slice(0, 3).map(tag =>
+									`<span class="tag">${tag}</span>`
+								).join('')}
+							</div>
+						` : ''}
 					</a>
-				</li>
-			))}
-		</ul>
+				`).join('');
+			}
+
+			// Update results count
+			function updateResultsCount(count) {
+				const counter = document.getElementById('results-count');
+				if (counter) {
+					counter.textContent = `${count} ${count === 1 ? 'activity' : 'activities'}`;
+				}
+			}
+
+			// Event listeners
+			document.getElementById('category-filter')?.addEventListener('change', (e) => {
+				filters.category = e.target.value;
+				applyFilters();
+			});
+
+			document.getElementById('level-filter')?.addEventListener('change', (e) => {
+				filters.level = e.target.value;
+				applyFilters();
+			});
+
+			document.querySelectorAll('[data-filter="festival"]').forEach(checkbox => {
+				checkbox.addEventListener('change', (e) => {
+					if (e.target.checked) {
+						filters.festivals.push(e.target.value);
+					} else {
+						filters.festivals = filters.festivals.filter(f => f !== e.target.value);
+					}
+					applyFilters();
+				});
+			});
+
+			document.getElementById('printable-filter')?.addEventListener('change', (e) => {
+				filters.printable = e.target.checked;
+				applyFilters();
+			});
+
+			// Debounced search
+			let searchTimeout;
+			document.getElementById('search-input')?.addEventListener('input', (e) => {
+				clearTimeout(searchTimeout);
+				searchTimeout = setTimeout(() => {
+					filters.search = e.target.value;
+					applyFilters();
+				}, 300);
+			});
+
+			// Clear all filters
+			document.getElementById('clear-filters')?.addEventListener('click', () => {
+				filters = {
+					category: '',
+					level: '',
+					festivals: [],
+					printable: false,
+					search: '',
+				};
+
+				// Reset form controls
+				document.getElementById('category-filter').value = '';
+				document.getElementById('level-filter').value = '';
+				document.getElementById('printable-filter').checked = false;
+				document.getElementById('search-input').value = '';
+				document.querySelectorAll('[data-filter="festival"]').forEach(cb => {
+					cb.checked = false;
+				});
+
+				applyFilters();
+			});
+		</script>
 	</body>
 </html>
