@@ -21,7 +21,7 @@ test.describe('Card Accessibility', () => {
     const vocabHeading = page.getByRole('heading', { name: 'Vocabulary', level: 2 });
     const phrasesHeading = page.getByRole('heading', { name: 'Phrases', level: 2 });
     const suppliesHeading = page.getByRole('heading', { name: 'Supplies Needed', level: 2 });
-    const instructionsHeading = page.getByRole('heading', { name: 'Activity Instructions', level: 2 });
+    const instructionsHeading = page.getByRole('heading', { name: 'Activity Instructions', level: 2 }).first();
 
     await expect(vocabHeading).toBeVisible();
     await expect(phrasesHeading).toBeVisible();
@@ -126,8 +126,8 @@ test.describe('Card Accessibility', () => {
   test('links have accessible names', async ({ page }) => {
     await page.goto(testUrl);
 
-    // Back link should have clear text
-    const backLink = page.getByRole('link', { name: /back to all activities/i });
+    // Back link should have clear text (using first() since there are two)
+    const backLink = page.getByRole('link', { name: /back to all activities/i }).first();
     await expect(backLink).toBeVisible();
   });
 

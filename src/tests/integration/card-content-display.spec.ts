@@ -61,7 +61,7 @@ test.describe('Card Content Display', () => {
   test('instructions display markdown-formatted content', async ({ page }) => {
     await page.goto('/activities/thanksgiving-gratitude');
 
-    await expect(page.getByRole('heading', { name: 'Activity Instructions' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Activity Instructions' }).first()).toBeVisible();
 
     const instructionsSection = page.locator('.instructions-card');
 
