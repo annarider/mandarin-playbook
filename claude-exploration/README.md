@@ -2,6 +2,41 @@
 
 This directory contains comprehensive documentation of the Mandarin Playbook codebase structure, data formats, components, and testing infrastructure.
 
+## Business Context
+
+### Purpose
+This application solves the challenge of **teaching Mandarin speaking skills through play** for families without access to immersion environments. It's an alternative to formal curricula, online tutoring, and textbook-based learning—focusing instead on natural language acquisition through songs, games, and interactive activities. 
+
+It's designed to be a helpful cue card for non-native Mandarin speakers trying to teach kids to speak in Mandarin. It reduces the mental energy to remember vocabulary and phrasing as well as boosting the speaking skills of the teacher. 
+
+**What it does:**
+- Provides daily play-based activities that embed Mandarin speaking practice
+- Offers vocabulary, sample phrases, and activity instructions optimized for active play
+- Works for young kids (under 5) with short attention spans AND older kids who resist traditional learning methods
+
+### Key Priorities
+1. **Engagement through play** — Activities must be genuinely fun, not disguised worksheets
+2. **Speaking focus** — Prioritizes oral production and comprehension over reading/writing
+3. **Low barriers** — Activities work with minimal prep, materials, or child cooperation
+
+### Success Metrics
+- Kids voluntarily use Mandarin phrases during activities
+- Parent can execute activities without extensive planning
+- Kids request specific activities repeatedly
+- Observable increase in spontaneous Mandarin speech
+
+### Pain Points Being Solved
+- **Rejection of formal learning** — Kids won't sit for tutoring sessions or workbooks
+- **Artificial context** — Traditional methods feel disconnected from real play
+- **Parent burden** — Creating play-based language activities from scratch is time-intensive
+- **Monolingual environment** — No natural opportunities for Mandarin conversation
+
+### Constraints & Design Priorities
+- **Mobile-first** — Parent accesses during active play sessions
+- **Quick cognitive load** — Parent can scan a card and start activity in 30 seconds
+- **Variety** — Enough diverse activities to prevent boredom over months of use
+- **Expandable** — Can add Cantonese content, progress tracking, community contributions
+
 ## Files in this Directory
 
 ### 01-CODEBASE-OVERVIEW.md
