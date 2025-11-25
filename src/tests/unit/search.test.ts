@@ -129,7 +129,7 @@ describe('searchActivities', () => {
   });
 
   it('handles null query gracefully', () => {
-    const result = searchActivities(mockActivities, null);
+    const result = searchActivities(mockActivities, null as any);
     expect(result).toHaveLength(mockActivities.length);
   });
 
@@ -193,3 +193,4 @@ describe('searchActivities', () => {
     expect(result).toHaveLength(1);
     expect(result[0].slug).toBe('mid-autumn-story');
   });
+});
