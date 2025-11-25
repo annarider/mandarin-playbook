@@ -422,7 +422,7 @@ const activities = await getCollection('activities');
 									</span>
 								</div>
 								<div class="meta-info">
-									<span>👥 {activity.data.ageRange}</span>
+									<span>�� {activity.data.ageRange}</span>
 									<span>⏱️ {activity.data.duration}</span>
 								</div>
 								{activity.data.printable && (
@@ -442,7 +442,10 @@ const activities = await getCollection('activities');
 			</div>
 		</div>
 
-		<script define:vars={{ activities }}>
+		<script type="module" define:vars={{ activities }}>
+			// Import filtering functions from our testable module
+			import { combineFilters } from '../lib/filtering.js';
+
 			// Serialize activities data for filtering
 			const activitiesData = activities.map(activity => ({
 				slug: activity.slug,
@@ -462,44 +465,13 @@ const activities = await getCollection('activities');
 				level: '',
 				festivals: [],
 				printable: false,
-				search: '',
 			};
 
-			// Filter function
+			let searchQuery = '';
+
+			// Filter function using our testable module
 			function applyFilters() {
-				let filtered = activitiesData;
-
-				// Category filter
-				if (filters.category) {
-					filtered = filtered.filter(a => a.category === filters.category);
-				}
-
-				// Level filter
-				if (filters.level) {
-					filtered = filtered.filter(a => a.difficultyLevel === filters.level);
-				}
-
-				// Festival filters (any match)
-				if (filters.festivals.length > 0) {
-					filtered = filtered.filter(a =>
-						filters.festivals.some(festival => a.tags.includes(festival))
-					);
-				}
-
-				// Printable filter
-				if (filters.printable) {
-					filtered = filtered.filter(a => a.hasPrintable);
-				}
-
-				// Search filter
-				if (filters.search) {
-					const query = filters.search.toLowerCase();
-					filtered = filtered.filter(a =>
-						a.title.toLowerCase().includes(query) ||
-						a.description.toLowerCase().includes(query)
-					);
-				}
-
+				const filtered = combineFilters(activitiesData, filters, searchQuery);
 				renderActivities(filtered);
 				updateResultsCount(filtered.length);
 			}
@@ -585,7 +557,7 @@ const activities = await getCollection('activities');
 			document.getElementById('search-input')?.addEventListener('input', (e) => {
 				clearTimeout(searchTimeout);
 				searchTimeout = setTimeout(() => {
-					filters.search = e.target.value;
+					searchQuery = e.target.value;
 					applyFilters();
 				}, 300);
 			});
@@ -597,8 +569,9 @@ const activities = await getCollection('activities');
 					level: '',
 					festivals: [],
 					printable: false,
-					search: '',
 				};
+
+				searchQuery = '';
 
 				// Reset form controls
 				document.getElementById('category-filter').value = '';
