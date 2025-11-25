@@ -90,15 +90,11 @@ describe('combineFilters', () => {
       ''
     );
 
-    expect(result).toHaveLength(3);
+    expect(result).toHaveLength(2);
     expect(result.map(a => a.slug).sort()).toEqual([
       'dragon-craft',
       'thanksgiving-craft',
-      'thanksgiving-gratitude', // category is 'festival', not 'craft'
-    ].filter(slug => {
-      const activity = mockActivities.find(a => a.slug === slug);
-      return activity?.category === 'craft';
-    }));
+    ]);
   });
 
   it('applies search without filters', () => {
