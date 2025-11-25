@@ -1,0 +1,220 @@
+---
+/**
+ * MobileSwiper Component
+ *
+ * Swipeable card carousel for mobile devices using Swiper.js
+ * Displays vocabulary and phrases cards in a touch-friendly format
+ */
+
+interface Card {
+  type: 'vocab' | 'phrases';
+  content: any;
+}
+
+interface Props {
+  cards: Card[];
+}
+
+const { cards } = Astro.props;
+---
+
+<div class="mobile-swiper-container">
+  <div class="swiper" data-swiper-cards>
+    <div class="swiper-wrapper">
+      {cards.map((card) => (
+        <div class="swiper-slide">
+          {card.type === 'vocab' && (
+            <div class="vocab-card card">
+              <h2>Vocabulary</h2>
+              <ul class="vocab-list">
+                {card.content.map((word: any) => (
+                  <li class="vocab-item">
+                    <div class="chinese">
+                      <span class="simplified">{word.simplified}</span>
+                      {word.traditional && <span class="traditional">({word.traditional})</span>}
+                    </div>
+                    <div class="pinyin">{word.pinyin}</div>
+                    <div class="english">{word.english}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {card.type === 'phrases' && (
+            <div class="phrases-card card">
+              <h2>Phrases</h2>
+              <ul class="phrases-list">
+                {card.content.map((phrase: any) => (
+                  <li class="phrase-item">
+                    <div class="chinese">
+                      <span class="simplified">{phrase.simplified}</span>
+                      {phrase.traditional && <span class="traditional">({phrase.traditional})</span>}
+                    </div>
+                    <div class="pinyin">{phrase.pinyin}</div>
+                    <div class="english">{phrase.english}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+    <!-- Pagination dots -->
+    <div class="swiper-pagination" aria-label="Slide navigation"></div>
+  </div>
+</div>
+
+<style>
+  .mobile-swiper-container {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .swiper {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    height: auto;
+  }
+
+  .card {
+    width: 100%;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #c41e3a;
+    border-bottom: 2px solid #c41e3a;
+    padding-bottom: 0.5rem;
+  }
+
+  .vocab-list,
+  .phrases-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .vocab-item,
+  .phrase-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .vocab-item:last-child,
+  .phrase-item:last-child {
+    border-bottom: none;
+  }
+
+  .chinese {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .traditional {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    color: #666;
+    font-weight: normal;
+  }
+
+  .pinyin {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 0.25rem;
+  }
+
+  .english {
+    font-size: 1.125rem;
+    color: #666;
+  }
+
+  /* Swiper pagination styles */
+  :global(.swiper-pagination) {
+    position: relative;
+    margin-top: 1rem;
+  }
+
+  :global(.swiper-pagination-bullet) {
+    background: #c41e3a;
+    opacity: 0.3;
+    width: 12px;
+    height: 12px;
+    margin: 0 6px !important;
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Pagination } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+
+  // Initialize Swiper when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const swiperElements = document.querySelectorAll('[data-swiper-cards]');
+
+    swiperElements.forEach((element) => {
+      new Swiper(element as HTMLElement, {
+        modules: [Pagination],
+
+        // Pagination
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          bulletClass: 'swiper-pagination-bullet',
+          bulletActiveClass: 'swiper-pagination-bullet-active',
+        },
+
+        // Touch settings
+        touchEventsTarget: 'container',
+        touchRatio: 1,
+        touchAngle: 45,
+        grabCursor: true,
+
+        // Behavior
+        loop: false,
+        slidesPerView: 1,
+        spaceBetween: 16,
+        centeredSlides: true,
+
+        // Performance
+        watchSlidesProgress: true,
+
+        // Accessibility
+        a11y: {
+          enabled: true,
+          prevSlideMessage: 'Previous slide',
+          nextSlideMessage: 'Next slide',
+          firstSlideMessage: 'This is the first slide',
+          lastSlideMessage: 'This is the last slide',
+          paginationBulletMessage: 'Go to slide {{index}}',
+        },
+
+        // Respect prefers-reduced-motion
+        speed: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 300,
+      });
+    });
+  });
+</script>
