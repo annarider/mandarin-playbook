@@ -5,6 +5,7 @@ import PhrasesCard from '../../components/PhrasesCard.astro';
 import SuppliesCard from '../../components/SuppliesCard.astro';
 import InstructionsCard from '../../components/InstructionsCard.astro';
 import TipsCard from '../../components/TipsCard.astro';
+import MobileSwiper from '../../components/MobileSwiper.astro';
 
 export async function getStaticPaths() {
   const activities = await getCollection('activities');
@@ -16,6 +17,15 @@ export async function getStaticPaths() {
 
 const { activity } = Astro.props;
 const { Content } = await activity.render();
+
+// Prepare cards for mobile swiper
+const swiperCards = [];
+if (activity.data.vocabulary) {
+  swiperCards.push({ type: 'vocab' as const, content: activity.data.vocabulary });
+}
+if (activity.data.phrases) {
+  swiperCards.push({ type: 'phrases' as const, content: activity.data.phrases });
+}
 ---
 
 <html lang="en">
@@ -197,9 +207,18 @@ const { Content } = await activity.render();
 		</header>
 
 		<main class="activity-content">
-			{activity.data.vocabulary && <VocabCard items={activity.data.vocabulary} />}
+			<!-- Mobile: Show swiper for vocab/phrases cards -->
+			{swiperCards.length > 0 && (
+				<div class="mobile-only">
+					<MobileSwiper cards={swiperCards} client:load />
+				</div>
+			)}
 
-			{activity.data.phrases && <PhrasesCard items={activity.data.phrases} />}
+			<!-- Desktop: Show all cards stacked -->
+			<div class="desktop-only">
+				{activity.data.vocabulary && <VocabCard items={activity.data.vocabulary} />}
+				{activity.data.phrases && <PhrasesCard items={activity.data.phrases} />}
+			</div>
 
 			{activity.data.supplies && <SuppliesCard items={activity.data.supplies} />}
 
