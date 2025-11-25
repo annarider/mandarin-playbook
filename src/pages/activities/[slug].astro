@@ -150,7 +150,23 @@ if (activity.data.phrases) {
 				text-decoration: underline;
 			}
 
+			/* Mobile/Desktop visibility toggles */
+			.mobile-only {
+				display: block;
+			}
+
+			.desktop-only {
+				display: none;
+			}
+
 			@media (min-width: 768px) {
+				.mobile-only {
+					display: none;
+				}
+
+				.desktop-only {
+					display: block;
+				}
 				body {
 					padding: 2rem;
 					max-width: 900px;
