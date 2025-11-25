@@ -157,8 +157,10 @@ describe('searchActivities', () => {
       mockActivities[1],
     ];
 
+    // Should still match on title even if description is undefined
     const result = searchActivities(activitiesWithMissingDesc, 'number');
-    expect(result).toHaveLength(0);
+    expect(result).toHaveLength(1);
+    expect(result[0].slug).toBe('counting-game');
   });
 
   it('handles activities with null fields', () => {
