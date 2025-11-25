@@ -1,0 +1,109 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - heading "Mandarin Playbook" [level=1] [ref=e4]
+      - paragraph [ref=e5]: Play-based Mandarin learning activities for families
+    - searchbox "Search activities" [ref=e7]
+    - generic [ref=e8]:
+      - complementary [ref=e9]:
+        - heading "Filter Activities" [level=2] [ref=e10]
+        - generic [ref=e11]:
+          - generic [ref=e12]: Subject
+          - combobox "Subject" [ref=e13] [cursor=pointer]:
+            - option "All subjects"
+            - option "Games" [selected]
+            - option "Crafts"
+            - option "Stories"
+            - option "Songs"
+            - option "Festivals"
+            - option "Food"
+            - option "Other"
+        - generic [ref=e14]:
+          - generic [ref=e15]: Difficulty Level
+          - combobox "Difficulty Level" [ref=e16] [cursor=pointer]:
+            - option "All levels" [selected]
+            - option "Beginner"
+            - option "Intermediate"
+            - option "Advanced"
+        - generic [ref=e17]:
+          - generic [ref=e18]: Festivals
+          - generic [ref=e19] [cursor=pointer]:
+            - checkbox "Thanksgiving" [ref=e20]
+            - text: Thanksgiving
+          - generic [ref=e21] [cursor=pointer]:
+            - checkbox "Mid-Autumn" [ref=e22]
+            - text: Mid-Autumn
+          - generic [ref=e23] [cursor=pointer]:
+            - checkbox "Lunar New Year" [ref=e24]
+            - text: Lunar New Year
+        - generic [ref=e26] [cursor=pointer]:
+          - checkbox "Has printable resources" [ref=e27]
+          - text: Has printable resources
+        - button "Clear all filters" [ref=e28] [cursor=pointer]
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - heading "Activities" [level=2] [ref=e31]
+          - generic [ref=e32]: 3 activities
+        - generic [ref=e33]:
+          - link "Mid-Autumn Festival Story Time Learn about Chang'e and the Moon Festival through storytelling and crafts festival intermediate �� 5-12 years ⏱️ 45-60 minutes 📄 Printable mid-autumn festival story" [ref=e34] [cursor=pointer]:
+            - /url: /activities/mid-autumn-story
+            - heading "Mid-Autumn Festival Story Time" [level=3] [ref=e35]
+            - paragraph [ref=e36]: Learn about Chang'e and the Moon Festival through storytelling and crafts
+            - generic [ref=e37]:
+              - generic [ref=e38]: festival
+              - generic [ref=e39]: intermediate
+            - generic [ref=e40]:
+              - generic [ref=e41]: �� 5-12 years
+              - generic [ref=e42]: ⏱️ 45-60 minutes
+            - generic [ref=e43]: 📄 Printable
+            - generic [ref=e44]:
+              - generic [ref=e45]: mid-autumn
+              - generic [ref=e46]: festival
+              - generic [ref=e47]: story
+          - link "Thanksgiving Gratitude Circle Practice expressing gratitude in Mandarin during Thanksgiving with family circle time festival beginner �� 4-10 years ⏱️ 20-30 minutes thanksgiving gratitude family" [ref=e48] [cursor=pointer]:
+            - /url: /activities/thanksgiving-gratitude
+            - heading "Thanksgiving Gratitude Circle" [level=3] [ref=e49]
+            - paragraph [ref=e50]: Practice expressing gratitude in Mandarin during Thanksgiving with family circle time
+            - generic [ref=e51]:
+              - generic [ref=e52]: festival
+              - generic [ref=e53]: beginner
+            - generic [ref=e54]:
+              - generic [ref=e55]: �� 4-10 years
+              - generic [ref=e56]: ⏱️ 20-30 minutes
+            - generic [ref=e57]:
+              - generic [ref=e58]: thanksgiving
+              - generic [ref=e59]: gratitude
+              - generic [ref=e60]: family
+          - link "Number Jump Game Active game to practice counting from 1-10 in Mandarin game beginner �� 3-8 years ⏱️ 10-15 minutes numbers active indoor" [ref=e61] [cursor=pointer]:
+            - /url: /activities/counting-game
+            - heading "Number Jump Game" [level=3] [ref=e62]
+            - paragraph [ref=e63]: Active game to practice counting from 1-10 in Mandarin
+            - generic [ref=e64]:
+              - generic [ref=e65]: game
+              - generic [ref=e66]: beginner
+            - generic [ref=e67]:
+              - generic [ref=e68]: �� 3-8 years
+              - generic [ref=e69]: ⏱️ 10-15 minutes
+            - generic [ref=e70]:
+              - generic [ref=e71]: numbers
+              - generic [ref=e72]: active
+              - generic [ref=e73]: indoor
+  - generic [ref=e76]:
+    - button "Menu" [ref=e77]:
+      - img [ref=e79]
+      - generic: Menu
+    - button "Inspect" [ref=e83]:
+      - img [ref=e85]
+      - generic: Inspect
+    - button "Audit" [ref=e87]:
+      - generic [ref=e88]:
+        - img [ref=e89]
+        - img [ref=e92]
+      - generic: Audit
+    - button "Settings" [ref=e95]:
+      - img [ref=e97]
+      - generic: Settings
+```
