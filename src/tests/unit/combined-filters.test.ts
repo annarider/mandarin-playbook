@@ -298,7 +298,14 @@ describe('combineFilters', () => {
       'paper'
     );
 
-    expect(result).toHaveLength(1);
-    expect(result[0].slug).toBe('dragon-craft');
+    // Both thanksgiving-craft and dragon-craft match:
+    // - Both are category 'craft'
+    // - Both have 'paper' in description
+    // - thanksgiving-craft has 'thanksgiving' tag, dragon-craft has 'lunar-new-year' tag
+    expect(result).toHaveLength(2);
+    expect(result.map(a => a.slug).sort()).toEqual([
+      'dragon-craft',
+      'thanksgiving-craft',
+    ]);
   });
 });
