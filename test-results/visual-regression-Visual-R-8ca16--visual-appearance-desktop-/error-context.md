@@ -1,0 +1,114 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "← Back to all activities" [ref=e3] [cursor=pointer]:
+      - /url: /
+  - banner [ref=e4]:
+    - heading "Thanksgiving Gratitude Circle" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Practice expressing gratitude in Mandarin during Thanksgiving with family circle time
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - strong [ref=e9]: "Age:"
+        - text: 4-10 years
+      - generic [ref=e10]:
+        - strong [ref=e11]: "Duration:"
+        - text: 20-30 minutes
+      - generic [ref=e12]:
+        - strong [ref=e13]: "Level:"
+        - text: beginner
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - heading "Vocabulary" [level=2] [ref=e17]
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - generic [ref=e20]: 感恩节
+            - generic [ref=e21]: gǎn'ēn jié
+            - generic [ref=e22]: Thanksgiving
+          - listitem [ref=e23]:
+            - generic [ref=e24]: 感谢
+            - generic [ref=e25]: gǎnxiè
+            - generic [ref=e26]: to thank, to be grateful
+          - listitem [ref=e27]:
+            - generic [ref=e28]: 谢谢
+            - generic [ref=e29]: xièxie
+            - generic [ref=e30]: thank you
+          - listitem [ref=e31]:
+            - generic [ref=e32]: 家人
+            - generic [ref=e33]: jiārén
+            - generic [ref=e34]: family
+          - listitem [ref=e35]:
+            - generic [ref=e36]: 朋友
+            - generic [ref=e37]: péngyou
+            - generic [ref=e38]: friend
+      - generic [ref=e39]:
+        - heading "Phrases" [level=2] [ref=e40]
+        - list [ref=e41]:
+          - listitem [ref=e42]:
+            - generic [ref=e43]: 我很感谢...
+            - generic [ref=e44]: wǒ hěn gǎnxiè...
+            - generic [ref=e45]: I am grateful for...
+          - listitem [ref=e46]:
+            - generic [ref=e47]: 谢谢你
+            - generic [ref=e48]: xièxie nǐ
+            - generic [ref=e49]: Thank you
+          - listitem [ref=e50]:
+            - generic [ref=e51]: 我爱我的家人
+            - generic [ref=e52]: wǒ ài wǒ de jiārén
+            - generic [ref=e53]: I love my family
+    - generic [ref=e54]:
+      - heading "Supplies Needed" [level=2] [ref=e55]
+      - list [ref=e56]:
+        - listitem [ref=e57]: Gratitude cards or paper
+        - listitem [ref=e58]: Crayons or markers
+        - listitem [ref=e59]: "Optional: photos of family members"
+    - generic [ref=e60]:
+      - heading "Activity Instructions" [level=2] [ref=e61]
+      - generic [ref=e62]:
+        - heading "Activity Instructions" [level=2] [ref=e63]
+        - list [ref=e64]:
+          - listitem [ref=e65]:
+            - paragraph [ref=e66]:
+              - strong [ref=e67]: Introduction (5 minutes)
+            - list [ref=e68]:
+              - listitem [ref=e69]: Sit in a circle with your family
+              - listitem [ref=e70]: Explain that Thanksgiving is about being grateful (感恩节 - gǎn’ēn jié)
+              - listitem [ref=e71]: Practice saying “我很感谢…” (wǒ hěn gǎnxiè… - I am grateful for…)
+          - listitem [ref=e72]:
+            - paragraph [ref=e73]:
+              - strong [ref=e74]: Vocabulary Practice (10 minutes)
+            - list [ref=e75]:
+              - listitem [ref=e76]: Go through each vocabulary word together
+              - listitem [ref=e77]: Have children repeat after you
+              - listitem [ref=e78]: Point to family members and practice saying 家人 (jiārén)
+          - listitem [ref=e79]:
+            - paragraph [ref=e80]:
+              - strong [ref=e81]: Gratitude Sharing (10 minutes)
+            - list [ref=e82]:
+              - listitem [ref=e83]: Each family member shares one thing they’re grateful for in Mandarin
+              - listitem [ref=e84]: Start with the phrase “我很感谢…”
+              - listitem [ref=e85]: Parents can help younger children
+              - listitem [ref=e86]: Everyone responds with “谢谢” (xièxie)
+          - listitem [ref=e87]:
+            - paragraph [ref=e88]:
+              - strong [ref=e89]: Art Activity (Optional)
+            - list [ref=e90]:
+              - listitem [ref=e91]: Draw or write what you’re grateful for on cards
+              - listitem [ref=e92]: Label drawings with Chinese characters (with help)
+        - heading "Tips for Parents" [level=2] [ref=e93]
+        - list [ref=e94]:
+          - listitem [ref=e95]: Keep it simple and fun
+          - listitem [ref=e96]: Don’t worry about perfect pronunciation
+          - listitem [ref=e97]: Celebrate every attempt to speak Mandarin
+          - listitem [ref=e98]: You can do this activity in both English and Mandarin
+        - heading "Cultural Connection" [level=2] [ref=e99]
+        - paragraph [ref=e100]: In Chinese culture, expressing gratitude and respect for family is deeply valued. While China doesn’t celebrate Thanksgiving, the concept of 感恩 (gǎn’ēn - gratitude) is very important in Chinese tradition.
+    - generic [ref=e101]:
+      - strong [ref=e102]: "Tags:"
+      - text: thanksgiving, gratitude, family, speaking
+  - navigation [ref=e103]:
+    - link "← Back to all activities" [ref=e104] [cursor=pointer]:
+      - /url: /
+```
