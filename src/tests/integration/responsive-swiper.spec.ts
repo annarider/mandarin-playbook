@@ -14,14 +14,11 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(testUrl);
 
-    // Mobile swiper should be hidden
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeHidden();
+    // Mobile swiper should not exist in DOM
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
     // Desktop cards should be visible and stacked
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
-
     // Both vocab and phrases cards should be visible at once
     await expect(page.locator('.vocab-card')).toBeVisible();
     await expect(page.locator('.phrases-card')).toBeVisible();
@@ -31,13 +28,13 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto(testUrl);
 
-    // Mobile swiper should be hidden at tablet size
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeHidden();
+    // Mobile swiper should not exist in DOM at tablet size
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
     // Desktop cards should be visible
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('mobile (375-767px): swiper active for vocab/phrases', async ({ page }) => {
@@ -45,27 +42,23 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.goto(testUrl);
 
     // Mobile swiper should be visible
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
-
-    // Desktop cards should be hidden
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeHidden();
-
-    // Swiper should be functional
     const swiper = page.locator('[data-swiper-cards]');
     await expect(swiper).toBeVisible();
+
+    // Desktop cards should not exist in DOM
+    const vocabCard = page.locator('.vocab-card');
+    const phrasesCard = page.locator('.phrases-card');
+
+    // Cards should only exist in swiper, not as standalone
+    await expect(vocabCard).toBeVisible(); // In swiper
+    await expect(phrasesCard).toBeVisible(); // In swiper
   });
 
   test('mobile (<375px): swiper still functional', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 568 });
     await page.goto(testUrl);
 
-    // Mobile swiper should be visible
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
-
-    // Swiper should be functional
+    // Swiper should be visible and functional
     const swiper = page.locator('[data-swiper-cards]');
     await expect(swiper).toBeVisible();
 
@@ -80,16 +73,16 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.goto(testUrl);
 
     // Swiper should be visible in portrait mobile
-    let mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    let swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
 
     // Switch to landscape (swap dimensions)
     await page.setViewportSize({ width: 667, height: 375 });
     await page.waitForTimeout(300);
 
     // Still mobile width, swiper should still be visible
-    mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
   });
 
   test('orientation change handled correctly (landscape to portrait)', async ({ page }) => {
@@ -98,16 +91,16 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.goto(testUrl);
 
     // Swiper should be visible
-    let mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    let swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
 
     // Switch to portrait
     await page.setViewportSize({ width: 375, height: 667 });
     await page.waitForTimeout(300);
 
     // Swiper should still be visible
-    mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
   });
 
   test('viewport resize toggles between swiper/stack correctly (mobile to desktop)', async ({ page }) => {
@@ -116,19 +109,20 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.goto(testUrl);
 
     // Swiper should be visible
-    let mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    let swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
 
-    // Resize to desktop
+    // Resize to desktop - this requires page reload with client:media
     await page.setViewportSize({ width: 1024, height: 768 });
+    await page.reload();
     await page.waitForTimeout(300);
 
-    // Swiper should be hidden, stacked cards visible
-    mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeHidden();
+    // Swiper should not exist, stacked cards visible
+    swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('viewport resize toggles between swiper/stack correctly (desktop to mobile)', async ({ page }) => {
@@ -137,19 +131,17 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.goto(testUrl);
 
     // Stacked cards should be visible
-    let desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
 
-    // Resize to mobile
+    // Resize to mobile - this requires page reload with client:media
     await page.setViewportSize({ width: 375, height: 667 });
+    await page.reload();
     await page.waitForTimeout(300);
 
-    // Swiper should be visible, stacked cards hidden
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
-
-    desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeHidden();
+    // Swiper should be visible
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
   });
 
   test('instructions/supplies/tips stay as regular cards on mobile', async ({ page }) => {
@@ -178,27 +170,28 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.setViewportSize({ width: 767, height: 1024 });
     await page.goto(testUrl);
 
-    let mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    let swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
 
-    // Just at breakpoint (768px) - should show stacked
+    // Just at breakpoint (768px) - should show stacked, requires reload
     await page.setViewportSize({ width: 768, height: 1024 });
+    await page.reload();
     await page.waitForTimeout(300);
 
-    mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeHidden();
+    swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('large desktop (1920px) shows stacked cards', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(testUrl);
 
-    // Desktop view
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    // Swiper should not exist
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
     // Both cards visible
     await expect(page.locator('.vocab-card')).toBeVisible();
@@ -209,32 +202,32 @@ test.describe('Responsive Swiper Behavior', () => {
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto(testUrl);
 
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('iPad landscape (1024x768) shows stacked cards', async ({ page }) => {
     await page.setViewportSize({ width: 1024, height: 768 });
     await page.goto(testUrl);
 
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('iPhone SE (375x667) shows swiper', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto(testUrl);
 
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
   });
 
   test('iPhone 12 Pro (390x844) shows swiper', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(testUrl);
 
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeVisible();
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).toBeVisible();
   });
 
   test('swiper state persists through orientation change', async ({ page }) => {

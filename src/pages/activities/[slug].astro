@@ -150,23 +150,7 @@ if (activity.data.phrases) {
 				text-decoration: underline;
 			}
 
-			/* Mobile/Desktop visibility toggles */
-			.mobile-only {
-				display: block;
-			}
-
-			.desktop-only {
-				display: none;
-			}
-
 			@media (min-width: 768px) {
-				.mobile-only {
-					display: none;
-				}
-
-				.desktop-only {
-					display: block;
-				}
 				body {
 					padding: 2rem;
 					max-width: 900px;
@@ -223,18 +207,14 @@ if (activity.data.phrases) {
 		</header>
 
 		<main class="activity-content">
-			<!-- Mobile: Show swiper for vocab/phrases cards -->
+			<!-- Mobile: Show swiper for vocab/phrases cards (only renders on mobile viewports) -->
 			{swiperCards.length > 0 && (
-				<div class="mobile-only">
-					<MobileSwiper cards={swiperCards} client:load />
-				</div>
+				<MobileSwiper cards={swiperCards} client:media="(max-width: 767px)" />
 			)}
 
-			<!-- Desktop: Show all cards stacked -->
-			<div class="desktop-only">
-				{activity.data.vocabulary && <VocabCard items={activity.data.vocabulary} />}
-				{activity.data.phrases && <PhrasesCard items={activity.data.phrases} />}
-			</div>
+			<!-- Desktop: Show all cards stacked (only renders on desktop viewports) -->
+			{activity.data.vocabulary && <VocabCard items={activity.data.vocabulary} client:media="(min-width: 768px)" />}
+			{activity.data.phrases && <PhrasesCard items={activity.data.phrases} client:media="(min-width: 768px)" />}
 
 			{activity.data.supplies && <SuppliesCard items={activity.data.supplies} />}
 

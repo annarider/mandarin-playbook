@@ -30,26 +30,26 @@ test.describe('Mobile Swiper Visual Display', () => {
     await page.setViewportSize({ width: 1024, height: 768 });
     await page.goto(testUrl);
 
-    // Mobile swiper should be hidden
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeHidden();
+    // Mobile swiper should not exist in DOM
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
     // Desktop cards should be visible
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('swiper does NOT display on desktop (1920px)', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(testUrl);
 
-    // Mobile swiper should be hidden
-    const mobileOnly = page.locator('.mobile-only');
-    await expect(mobileOnly).toBeHidden();
+    // Mobile swiper should not exist in DOM
+    const swiper = page.locator('[data-swiper-cards]');
+    await expect(swiper).not.toBeAttached();
 
     // Desktop cards should be visible
-    const desktopOnly = page.locator('.desktop-only');
-    await expect(desktopOnly).toBeVisible();
+    await expect(page.locator('.vocab-card')).toBeVisible();
+    await expect(page.locator('.phrases-card')).toBeVisible();
   });
 
   test('pagination dots are visible on mobile', async ({ page }) => {
